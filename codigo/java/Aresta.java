@@ -1,3 +1,5 @@
+package codigo.java;
+
 public class Aresta {
     private int peso;
     private Vertice origem;
@@ -9,10 +11,12 @@ public class Aresta {
         this.origem = origem;
         this.destino = destino;
         this.idAresta = gerarIdAresta(origem, destino);
+
+        this.origem.adicionarAresta(this);
     }
 
     String gerarIdAresta(Vertice origem, Vertice destino) {
-        return origem.id + "->" + destino.id;
+        return origem.getId() + "->" + destino.getId();
     }
 
     public int getPeso() {

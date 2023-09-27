@@ -1,3 +1,5 @@
+package codigo.java;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +40,7 @@ class Grafo {
         if (origem == null || destino == null)
             return false;
 
-        return origem.verticesAdjacentes.contains(destino);
+        return origem.getVerticesAdjacentes().contains(destino);
     }
 
     public Map<String, Vertice> getVertices() {
