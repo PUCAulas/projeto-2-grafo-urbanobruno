@@ -25,8 +25,8 @@ class BFS {
 
         while (!fila.isEmpty()) {
             Vertice atual = fila.poll();
-            for (Aresta aresta : atual.edges) {
-                Vertice vizinho = aresta.destino;
+            for (Aresta aresta : atual.getArestasVertice()) {
+                Vertice vizinho = aresta.getDestino();
                 if (!visited.contains(vizinho)) {
                     visited.add(vizinho);
                     fila.add(vizinho);

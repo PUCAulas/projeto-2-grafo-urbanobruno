@@ -25,7 +25,7 @@ class Vertice {
     }
 
     public List<Vertice> getVerticesAdjacentes() {
-        return verticesAdjacentes;
+        return this.verticesAdjacentes;
     }
 
     public void setVerticesAdjacentes(List<Vertice> verticesAdjacentes) {
@@ -34,6 +34,10 @@ class Vertice {
 
     public void adicionarAresta(Aresta aresta) {
         this.arestasVertice.add(aresta);
+    }
+
+    public List<Aresta> getArestasVertice() {
+        return this.arestasVertice;
     }
 
 }
