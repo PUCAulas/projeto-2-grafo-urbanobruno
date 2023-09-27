@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 class Grafo {
-    Map<String, Vertice> vertices;
-    List<Aresta> arestas;
+    private Map<String, Vertice> vertices;
+    private List<Aresta> arestas;
 
     Grafo() {
         this.vertices = new HashMap<>();
@@ -40,4 +40,21 @@ class Grafo {
 
         return origem.verticesAdjacentes.contains(destino);
     }
+
+    public Map<String, Vertice> getVertices() {
+        return vertices;
+    }
+
+    public void setVertices(Map<String, Vertice> vertices) {
+        this.vertices = vertices;
+    }
+
+    public List<Aresta> getArestas() {
+        return arestas;
+    }
+
+    public void setArestas(List<Aresta> arestas) {
+        this.arestas = arestas;
+    }
+
 }
