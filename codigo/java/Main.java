@@ -7,8 +7,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Grafo grafo = new Grafo();
 
-        // Arquivo para o grafo
-        grafo.carregarGrafoDeArquivo("arqTest1.txt");
+        // Arquivo para o grafo -- TODO testar
+        grafo.carregarGrafoDeArquivo("cidades.txt");
         String requisito;
 
         do {
