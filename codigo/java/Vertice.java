@@ -1,43 +1,28 @@
 package codigo.java;
 
-import java.util.*;
-
-class Vertice {
-    private String id;
-    private List<Vertice> verticesAdjacentes;
-    private List<Aresta> arestasVertice;
-
-    Vertice(String id) {
+public class Vertice {
+    private int id;
+    private String nome; // cidade
+  
+    public Vertice(int id, String nome) {
         this.id = id;
-        this.verticesAdjacentes = new ArrayList<>();
+        this.nome = nome;
     }
 
-    public void addVerticeAdjacente(Vertice v) {
-        this.verticesAdjacentes.add(v);
-    }
-
-    public String getId() {
+    // Getters e setters
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public List<Vertice> getVerticesAdjacentes() {
-        return this.verticesAdjacentes;
+    public String getNome() {
+        return nome;
     }
 
-    public void setVerticesAdjacentes(List<Vertice> verticesAdjacentes) {
-        this.verticesAdjacentes = verticesAdjacentes;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
-
-    public void adicionarAresta(Aresta aresta) {
-        this.arestasVertice.add(aresta);
-    }
-
-    public List<Aresta> getArestasVertice() {
-        return this.arestasVertice;
-    }
-
 }
