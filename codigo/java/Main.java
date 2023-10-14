@@ -8,7 +8,7 @@ public class Main {
         Grafo grafo = new Grafo();
 
         // Arquivo para o grafo -- TODO testar
-        grafo.carregarGrafoDeArquivo("cidades.txt");
+        grafo.carregarGrafoDeArquivo("arqTest1.txt");
         String requisito;
 
         do {
@@ -41,8 +41,15 @@ public class Main {
 
 
                 case "d":
-
-
+                    List<Vertice> rota = grafo.menorDistanciaPCV();
+                    System.out.println("Melhor rota:");
+                    for (int i = 0; i < rota.size(); i++) {
+                        System.out.print(rota.get(i).getNome());
+                        if (i < rota.size() - 1) {
+                            System.out.print(" -> ");
+                        }
+                    }
+                    System.out.println();
                 case "x":
 
                     break;

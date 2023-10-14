@@ -128,4 +128,66 @@ class Grafo {
         return resultado;
     }
 
+    // Método que permuta entre os vertices para calcular a menor distancia
+    public List<Vertice> menorDistanciaPCV() {
+        List<List<Vertice>> todasPermutacoes = permutar(vertices);
+        List<Vertice> melhorCaminho = null;
+        int menorDistancia = Integer.MAX_VALUE;
+    
+        for (List<Vertice> caminho : todasPermutacoes) {
+            int distanciaAtual = calcularDistancia(caminho);
+            if (distanciaAtual < menorDistancia) {
+                menorDistancia = distanciaAtual;
+                melhorCaminho = caminho;
+            }
+        }
+        return melhorCaminho;
+    }
+    
+    private List<List<Vertice>> permutar(List<Vertice> original) {
+        // Retorna todas as permutações possíveis da lista original de vértices
+        if (original.size() == 0) { 
+            List<List<Vertice>> result = new ArrayList<>();
+            result.add(new ArrayList<>());
+            return result;
+        }
+        Vertice firstElement = original.remove(0);
+        List<List<Vertice>> returnValue = new ArrayList<>();
+        List<List<Vertice>> permutations = permutar(original);
+        for (List<Vertice> smallerPermutated : permutations) {
+            for (int index=0; index <= smallerPermutated.size(); index++) {
+                List<Vertice> temp = new ArrayList<>(smallerPermutated);
+                temp.add(index, firstElement);
+                returnValue.add(temp);
+            }
+        }
+        return returnValue;
+    }
+    
+    private int calcularDistancia(List<Vertice> caminho) {
+        int distancia = 0;
+        for (int i = 0; i < caminho.size() - 1; i++) {
+            Vertice atual = caminho.get(i);
+            Vertice proximo = caminho.get(i + 1);
+            for (Aresta a : arestas) {
+                if ((a.getOrigem().equals(atual) && a.getDestino().equals(proximo)) ||
+                    (a.getOrigem().equals(proximo) && a.getDestino().equals(atual))) {
+                    distancia += a.getPeso();
+                    break;
+                }
+            }
+        }
+        // Retornar à primeira cidade
+        Vertice inicio = caminho.get(0);
+        Vertice fim = caminho.get(caminho.size() - 1);
+        for (Aresta a : arestas) {
+            if ((a.getOrigem().equals(inicio) && a.getDestino().equals(fim)) ||
+                (a.getOrigem().equals(fim) && a.getDestino().equals(inicio))) {
+                distancia += a.getPeso();
+                break;
+            }
+        }
+        return distancia;
+    }
+
 }
