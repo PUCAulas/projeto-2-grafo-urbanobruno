@@ -65,6 +65,9 @@ public class Main {
 
                 case "d":
                     List<Vertice> rota = grafo.menorDistanciaPCV();
+                    if(rota.isEmpty()){
+                        System.out.println("Não foi possível calcular a rota ");
+                    }
                     System.out.println("Melhor rota:");
                     for (int i = 0; i < rota.size(); i++) {
                         System.out.print(rota.get(i).getNome());

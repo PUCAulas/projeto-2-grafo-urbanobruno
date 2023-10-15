@@ -146,6 +146,9 @@ class Grafo {
 
     // Método que permuta entre os vertices para calcular a menor distancia
     public List<Vertice> menorDistanciaPCV() {
+        if (vertices.isEmpty()) {
+            return new ArrayList<>(); 
+        }
         List<List<Vertice>> todasPermutacoes = permutar(vertices);
         List<Vertice> melhorCaminho = null;
         int menorDistancia = Integer.MAX_VALUE;
@@ -181,6 +184,9 @@ class Grafo {
     }
     
     private int calcularDistancia(List<Vertice> caminho) {
+        if (caminho.isEmpty()) {
+            return Integer.MAX_VALUE; 
+        }
         int distancia = 0;
         for (int i = 0; i < caminho.size() - 1; i++) {
             Vertice atual = caminho.get(i);
