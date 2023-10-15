@@ -30,7 +30,8 @@ public class Main {
                     for (Vertice cidade : cidadesQueAlcancam) {
                         System.out.println(cidade.getNome());
                     }
-                    
+                    System.out.println();
+
                     break;
 
                 case "b":
@@ -43,6 +44,9 @@ public class Main {
                             System.out.println(cidade.getNome());
                         }
                     }
+                    System.out.println();
+
+
                     break;
 
                     case "c":
