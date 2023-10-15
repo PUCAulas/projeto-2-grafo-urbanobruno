@@ -190,4 +190,39 @@ class Grafo {
         return distancia;
     }
 
+    // Método para verificar se todas as cidades são acessíveis a partir de qualquer outra cidade
+    public List<Vertice> cidadesInalcançaveis() {
+        List<Vertice> cidadesInalcançaveis = new ArrayList<>();
+
+        for (Vertice origem : vertices) {
+            Set<Vertice> visitados = new HashSet<>();
+            bfs(origem, visitados);
+
+            if (visitados.size() != vertices.size()) {
+                // Não é possível alcançar todas as cidades a partir desta origem
+                cidadesInalcançaveis.add(origem);
+            }
+        }
+
+        return cidadesInalcançaveis;
+    }
+
+    // Método de busca em largura para verificar se todas as cidades são acessíveis a partir de qualquer outra cidade.
+    private void bfs(Vertice origem, Set<Vertice> visitados) {
+        Queue<Vertice> fila = new LinkedList<>();
+        fila.add(origem);
+        visitados.add(origem);
+
+        while (!fila.isEmpty()) {
+            Vertice vertice = fila.poll();
+
+            for (Aresta aresta : arestas) {
+                if (aresta.getOrigem().equals(vertice) && !visitados.contains(aresta.getDestino())) {
+                    visitados.add(aresta.getDestino());
+                    fila.add(aresta.getDestino());
+                }
+            }
+        }
+    }
+
 }
