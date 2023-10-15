@@ -5,62 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-<<<<<<< HEAD
-=======
 import java.util.HashSet;
->>>>>>> 3363b64b07c339b147b4cc65592562f6f3f6d3ef
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-
-import java.io.*;
-import java.util.*;
-
-import java.util.LinkedList;
-import java.util.Iterator;
-
 class Grafo {
-<<<<<<< HEAD
-
-    // Número de vértices
-    private int numeroDeVertices;
-    private LinkedList<Integer> adj[];
-
-    // Construtor
-    Grafo(int v) {
-        numeroDeVertices = v;
-        adj = new LinkedList[v];
-        for (int i = 0; i < v; ++i)
-            adj[i] = new LinkedList();
-    }
-
-    void adicionarAresta(int v, int w) {
-        adj[v].add(w);
-    }
-
-    void BFS(int s) {
-        boolean visitados[] = new boolean[numeroDeVertices];
-
-        LinkedList<Integer> fila = new LinkedList<Integer>();
-
-        visitados[s] = true;
-        fila.add(s);
-
-        while (fila.size() != 0) {
-
-            s = fila.poll();
-            System.out.print(s + " ");
-
-            Iterator<Integer> i = adj[s].listIterator();
-            while (i.hasNext()) {
-                int n = i.next();
-                if (!visitados[n]) {
-                    visitados[n] = true;
-                    fila.add(n);
-=======
     private List<Vertice> vertices;
     private List<Aresta> arestas;
 
@@ -87,6 +39,8 @@ class Grafo {
         arestas.add(aresta);
     }
 
+    // LE E PROCESSA O ARQUIVO
+
     public void carregarGrafoDeArquivo(String nomeArquivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo))) {
             String linha;
@@ -99,102 +53,98 @@ class Grafo {
         }
     }
 
-    // Método que processa as linhas do arquivo
     private void processarLinha(String linha) {
         String[] partes = linha.split(":");
         if (partes.length >= 2) {
             String nomeVerticeOrigem = partes[0].trim();
             String[] conexoes = partes[1].trim().split(",");
-
-            // Crie a vertice de origem e adicione ao grafo
-            Vertice verticeOrigem = new Vertice(vertices.size() + 1, nomeVerticeOrigem);
-            adicionarVertice(verticeOrigem);
-
+    
+            // Crie o vértice de origem e adicione ao grafo
+            Vertice verticeOrigem = obterOuCriarVertice(nomeVerticeOrigem);
+    
             for (String conexao : conexoes) {
                 String[] dadosConexao = conexao.trim().split("\\s*\\(\\s*|\\s*\\)\\s*");
-
+    
                 if (dadosConexao.length == 2) {
                     String nomeVerticeDestino = dadosConexao[0].trim();
                     int distancia = Integer.parseInt(dadosConexao[1]);
-
-                    // Crie a vertice de destino e a arestsa correspondente
-                    Vertice verticeDestino = new Vertice(vertices.size() + 1, nomeVerticeDestino);
+    
+                    // Crie o vértice de destino e a aresta correspondente
+                    Vertice verticeDestino = obterOuCriarVertice(nomeVerticeDestino);
                     Aresta aresta = new Aresta(verticeOrigem, verticeDestino, distancia);
-
-                    adicionarVertice(verticeDestino);
+    
                     adicionarAresta(aresta);
->>>>>>> 3363b64b07c339b147b4cc65592562f6f3f6d3ef
                 }
             }
         }
     }
-
-<<<<<<< HEAD
-    public static void main(String args[]) {
-        Grafo g = new Grafo(4);
-        g.adicionarAresta(0, 1);
-        g.adicionarAresta(0, 2);
-        g.adicionarAresta(1, 2);
-        g.adicionarAresta(2, 0);
-        g.adicionarAresta(2, 3);
-        g.adicionarAresta(3, 3);
-
-        System.out.println(
-            "Seguindo a primeira travessia em largura "
-            + "(Começando no vértice 2)");
-
-        g.BFS(2);
+    
+    private Vertice obterOuCriarVertice(String nome) {
+        // Verifica se o vértice já existe no grafo
+        for (Vertice v : vertices) {
+            if (v.getNome().equals(nome)) {
+                return v;
+            }
+        }
+        // Se não existir, cria um novo vértice e adiciona ao grafo
+        Vertice novoVertice = new Vertice(vertices.size() + 1, nome);
+        adicionarVertice(novoVertice);
+        return novoVertice;
     }
-}
 
-=======
-    // Método de busca em largura pra recomendação de visitação em todas as vertices
-    // e todas as arestas (a)
-    public List<String> buscaLargura() {
+    // --------------------------------------------
+
+    // REQUISITO A E B
+
+    public List<Vertice> cidadesQueAlcancamTodas() {
+        List<Vertice> cidades = new ArrayList<>();
+        for (Vertice origem : vertices) {
+            Set<Vertice> visitados = new HashSet<>();
+            bfs(origem, visitados);
+    
+            if (visitados.size() == vertices.size()) {
+                cidades.add(origem);
+            }
+        }
+        return cidades;
+    }
+
+    // Método para verificar se todas as cidades são acessíveis a partir de qualquer outra cidade
+    public List<Vertice> cidadesInalcançaveis() {
+        List<Vertice> cidadesInalcançaveis = new ArrayList<>();
+
+        for (Vertice origem : vertices) {
+            Set<Vertice> visitados = new HashSet<>();
+            bfs(origem, visitados);
+
+            if (visitados.size() != vertices.size()) {
+                // Não é possível alcançar todas as cidades a partir desta origem
+                cidadesInalcançaveis.add(origem);
+            }
+        }
+
+        return cidadesInalcançaveis;
+    }
+
+    // Método de busca em largura para verificar se todas as cidades são acessíveis a partir de qualquer outra cidade.
+    private void bfs(Vertice origem, Set<Vertice> visitados) {
         Queue<Vertice> fila = new LinkedList<>();
-        int t = 0; // Variável para atribuir valores L (tempo de visita)
-        Map<Vertice, Integer> nivel = new HashMap<>(); // Mapeia cada Vertice para seu nível
-        Map<Vertice, Vertice> pai = new HashMap<>(); // Mapeia cada Vertice para seu pai
-        Map<Vertice, Integer> l = new HashMap<>(); // Mapeia cada Vertice para seu tempo de visita
-        Set<Vertice> visitados = new HashSet<>(); // Ver Vertices já visitadas
-        Set<String> verticesDestino = new HashSet<>(); // Ver se já está em resultado
-        List<String> resultado = new ArrayList<>(); // Consertar resultado
+        fila.add(origem);
+        visitados.add(origem);
 
-        for (Vertice vertice : vertices) {
-            if (!visitados.contains(vertice)) { // Ver se a vertice já foi visitada
-                fila.add(vertice);
-                nivel.put(vertice, 0);
-                pai.put(vertice, null);
+        while (!fila.isEmpty()) {
+            Vertice vertice = fila.poll();
 
-                while (!fila.isEmpty()) {
-                    Vertice v = fila.poll();
-                    int currentLevel = nivel.get(v);
-                    l.put(v, t);
-                    t++;
-                    visitados.add(v); // Marca a vertice como visitada
-
-                    for (Aresta aresta : arestas) {
-                        if (aresta.getOrigem().equals(v)) {
-                            Vertice w = aresta.getDestino();
-                            if (!visitados.contains(w) && !fila.contains(w)) {
-                                // Visitar aresta pai {v, w}
-                                pai.put(w, v);
-                                nivel.put(w, currentLevel + 1);
-                                fila.add(w);
-                                String cidade = v.getNome() + " -> " + w.getNome();
-                                if (!verticesDestino.contains(w.getNome())) {
-                                    resultado.add(cidade); // Adiciona o resultado à lista se o nome da vertice destino
-                                    verticesDestino.add(w.getNome()); // Adiciona o nome da vertice destino ao resultado
-                                }
-                            }
-                        }
-                    }
+            for (Aresta aresta : arestas) {
+                if (aresta.getOrigem().equals(vertice) && !visitados.contains(aresta.getDestino())) {
+                    visitados.add(aresta.getDestino());
+                    fila.add(aresta.getDestino());
                 }
             }
         }
-
-        return resultado;
     }
+
+    // REQUISITO D
 
     // Método que permuta entre os vertices para calcular a menor distancia
     public List<Vertice> menorDistanciaPCV() {
@@ -258,40 +208,5 @@ class Grafo {
         return distancia;
     }
 
-    // Método para verificar se todas as cidades são acessíveis a partir de qualquer outra cidade
-    public List<Vertice> cidadesInalcançaveis() {
-        List<Vertice> cidadesInalcançaveis = new ArrayList<>();
-
-        for (Vertice origem : vertices) {
-            Set<Vertice> visitados = new HashSet<>();
-            bfs(origem, visitados);
-
-            if (visitados.size() != vertices.size()) {
-                // Não é possível alcançar todas as cidades a partir desta origem
-                cidadesInalcançaveis.add(origem);
-            }
-        }
-
-        return cidadesInalcançaveis;
-    }
-
-    // Método de busca em largura para verificar se todas as cidades são acessíveis a partir de qualquer outra cidade.
-    private void bfs(Vertice origem, Set<Vertice> visitados) {
-        Queue<Vertice> fila = new LinkedList<>();
-        fila.add(origem);
-        visitados.add(origem);
-
-        while (!fila.isEmpty()) {
-            Vertice vertice = fila.poll();
-
-            for (Aresta aresta : arestas) {
-                if (aresta.getOrigem().equals(vertice) && !visitados.contains(aresta.getDestino())) {
-                    visitados.add(aresta.getDestino());
-                    fila.add(aresta.getDestino());
-                }
-            }
-        }
-    }
 
 }
->>>>>>> 3363b64b07c339b147b4cc65592562f6f3f6d3ef

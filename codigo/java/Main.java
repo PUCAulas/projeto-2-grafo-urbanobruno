@@ -7,8 +7,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Grafo grafo = new Grafo();
 
-        // Arquivo para o grafo -- TODO testar
-        grafo.carregarGrafoDeArquivo("arqTest1.txt");
+        grafo.carregarGrafoDeArquivo("files/arqTest1.txt");
         String requisito;
 
         do {
@@ -25,12 +24,13 @@ public class Main {
 
             switch (requisito) {
                 case "a":
-                    List<String> resultadoBusca = grafo.buscaLargura();
-                    // Imprimir
-                    System.out.println("Resultado da busca em largura:");
-                    for (String aresta : resultadoBusca) {
-                        System.out.println(aresta);
+                    List<Vertice> cidadesQueAlcancam  = grafo.cidadesQueAlcancamTodas();
+
+                    System.out.println("Cidades que conseguem chegar a todas as outras cidades:");
+                    for (Vertice cidade : cidadesQueAlcancam) {
+                        System.out.println(cidade.getNome());
                     }
+                    
                     break;
 
                 case "b":
