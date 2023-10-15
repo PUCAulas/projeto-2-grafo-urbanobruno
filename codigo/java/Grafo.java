@@ -208,5 +208,49 @@ class Grafo {
         return distancia;
     }
 
+    public List<Vertice> recomendarVisitaTodasCidades() {
+        List<Vertice> rotaRecomendada = new ArrayList<>();
+        List<Vertice> todasCidades = new ArrayList<>(vertices); // Copia de todas as cidades
+    
+        if (todasCidades.isEmpty()) {
+            System.out.println("Não há cidades no grafo.");
+            return rotaRecomendada;
+        }
+    
+        // Adicione a primeira cidade à rota
+        Vertice cidadeAtual = todasCidades.get(0);
+        rotaRecomendada.add(cidadeAtual);
+    
+        while (!todasCidades.isEmpty()) {
+            Vertice cidadeMaisProxima = encontrarCidadeMaisProxima(cidadeAtual, todasCidades);
+            if (cidadeMaisProxima != null) {
+                rotaRecomendada.add(cidadeMaisProxima);
+                todasCidades.remove(cidadeMaisProxima);
+                cidadeAtual = cidadeMaisProxima;
+            }
+        }
+    
+        return rotaRecomendada;
+    }
+    
+    private Vertice encontrarCidadeMaisProxima(Vertice origem, List<Vertice> cidades) {
+        Vertice cidadeMaisProxima = null;
+        int menorDistancia = Integer.MAX_VALUE;
+    
+        for (Vertice cidade : cidades) {
+            if (!cidade.equals(origem)) {
+                for (Aresta aresta : arestas) {
+                    if (aresta.getOrigem().equals(origem) && aresta.getDestino().equals(cidade)) {
+                        if (aresta.getPeso() < menorDistancia) {
+                            menorDistancia = aresta.getPeso();
+                            cidadeMaisProxima = cidade;
+                        }
+                    }
+                }
+            }
+        }
+    
+        return cidadeMaisProxima;
+    }
 
 }

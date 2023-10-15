@@ -45,7 +45,19 @@ public class Main {
                     }
                     break;
 
-                case "c":
+                    case "c":
+                    List<Vertice> rotaRecomendada = grafo.recomendarVisitaTodasCidades();
+                    
+                    System.out.println("Recomendação de visitação em todas as cidades e todas as estradas:");
+                    for (int i = 0; i < rotaRecomendada.size(); i++) {
+                        System.out.print(rotaRecomendada.get(i).getNome());
+                        if (i < rotaRecomendada.size() - 1) {
+                            System.out.print(" -> ");
+                        }
+                    }
+                    System.out.println();
+                    break;
+                
 
                 case "d":
                     List<Vertice> rota = grafo.menorDistanciaPCV();
