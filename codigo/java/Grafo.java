@@ -2,61 +2,73 @@ package codigo.java;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+
+import java.io.*;
+import java.util.*;
+
+import java.util.LinkedList;
+import java.util.Iterator;
+
 class Grafo {
-    private Map<String, Vertice> vertices;
-    private List<Aresta> arestas;
 
-    Grafo() {
-        this.vertices = new HashMap<>();
-        this.arestas = new ArrayList<>();
+    // Número de vértices
+    private int numeroDeVertices;
+    private LinkedList<Integer> adj[];
+
+    // Construtor
+    Grafo(int v) {
+        numeroDeVertices = v;
+        adj = new LinkedList[v];
+        for (int i = 0; i < v; ++i)
+            adj[i] = new LinkedList();
     }
 
-    void addVertice(String id) {
-        this.vertices.put(id, new Vertice(id));
+    void adicionarAresta(int v, int w) {
+        adj[v].add(w);
     }
 
-    void addAresta(int peso, String origemId, String destinoId) {
-        Vertice origem = this.vertices.get(origemId);
-        Vertice destino = this.vertices.get(destinoId);
+    void BFS(int s) {
+        boolean visitados[] = new boolean[numeroDeVertices];
 
-        if (origem == null || destino == null) {
-            System.out.println("Vertice de origem ou destino não existe.");
-            return;
+        LinkedList<Integer> fila = new LinkedList<Integer>();
+
+        visitados[s] = true;
+        fila.add(s);
+
+        while (fila.size() != 0) {
+
+            s = fila.poll();
+            System.out.print(s + " ");
+
+            Iterator<Integer> i = adj[s].listIterator();
+            while (i.hasNext()) {
+                int n = i.next();
+                if (!visitados[n]) {
+                    visitados[n] = true;
+                    fila.add(n);
+                }
+            }
         }
-
-        Aresta aresta = new Aresta(peso, origem, destino);
-        this.arestas.add(aresta);
-
-        origem.addVerticeAdjacente(destino);
     }
 
-    boolean existeEstrada(String origemId, String destinoId) {
-        Vertice origem = this.vertices.get(origemId);
-        Vertice destino = this.vertices.get(destinoId);
+    public static void main(String args[]) {
+        Grafo g = new Grafo(4);
+        g.adicionarAresta(0, 1);
+        g.adicionarAresta(0, 2);
+        g.adicionarAresta(1, 2);
+        g.adicionarAresta(2, 0);
+        g.adicionarAresta(2, 3);
+        g.adicionarAresta(3, 3);
 
-        if (origem == null || destino == null)
-            return false;
+        System.out.println(
+            "Seguindo a primeira travessia em largura "
+            + "(Começando no vértice 2)");
 
-        return origem.getVerticesAdjacentes().contains(destino);
+        g.BFS(2);
     }
-
-    public Map<String, Vertice> getVertices() {
-        return vertices;
-    }
-
-    public void setVertices(Map<String, Vertice> vertices) {
-        this.vertices = vertices;
-    }
-
-    public List<Aresta> getArestas() {
-        return arestas;
-    }
-
-    public void setArestas(List<Aresta> arestas) {
-        this.arestas = arestas;
-    }
-
 }
+
