@@ -1,54 +1,40 @@
 package codigo.java;
 
 public class Aresta {
-    private int peso;
     private Vertice origem;
     private Vertice destino;
-    private String idAresta;
+    private int peso;
 
-    Aresta(int peso, Vertice origem, Vertice destino) {
-        this.peso = peso;
+    public Aresta(Vertice origem, Vertice destino, int peso) {
         this.origem = origem;
         this.destino = destino;
-        this.idAresta = gerarIdAresta(origem, destino);
-
-        this.origem.adicionarAresta(this);
+        this.peso = peso;
     }
 
-    String gerarIdAresta(Vertice origem, Vertice destino) {
-        return origem.getId() + "->" + destino.getId();
-    }
-
-    public int getPeso() {
-        return peso;
-    }
-
+    // Getters e Setters
     public Vertice getOrigem() {
         return origem;
-    }
-
-    public Vertice getDestino() {
-        return destino;
-    }
-
-    public String getIdAresta() {
-        return idAresta;
-    }
-
-    public void setPeso(int peso) {
-        this.peso = peso;
     }
 
     public void setOrigem(Vertice origem) {
         this.origem = origem;
     }
 
+    public Vertice getDestino() {
+        return destino;
+    }
+
     public void setDestino(Vertice destino) {
         this.destino = destino;
     }
 
-    public void setIdAresta(String idAresta) {
-        this.idAresta = idAresta;
+    public int getPeso() {
+        return peso;
+    }
+
+    public void setPeso(int peso) {
+        this.peso = peso;
     }
 
 }
+
