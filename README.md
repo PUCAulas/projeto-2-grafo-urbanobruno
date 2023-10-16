@@ -7,7 +7,7 @@
 * Bruno Rocha Corrêa Urbano 
 * Pedro de Barros Alves
 * Ryan Cristian Oliveira Rezende
-* Henrrique Dani Franco Nezio
+* Henrique Dani Franco Nezio
 * Alberto da Costas Reis Junior
 
 
