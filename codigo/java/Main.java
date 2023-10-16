@@ -7,6 +7,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Grafo grafo = new Grafo();
 
+        // Selecionar arquivo
         grafo.carregarGrafoDeArquivo("files/arqTest1.txt");
         String requisito;
 
@@ -24,7 +25,7 @@ public class Main {
 
             switch (requisito) {
                 case "a":
-                    List<Vertice> cidadesQueAlcancam  = grafo.cidadesQueAlcancamTodas();
+                    List<Vertice> cidadesQueAlcancam = grafo.cidadesQueAlcancamTodas();
 
                     System.out.println("Cidades que conseguem chegar a todas as outras cidades:");
                     for (Vertice cidade : cidadesQueAlcancam) {
@@ -46,26 +47,20 @@ public class Main {
                     }
                     System.out.println();
 
-
                     break;
 
-                    case "c":
-                    List<Vertice> rotaRecomendada = grafo.recomendarVisitaTodasCidades();
-                    
-                    System.out.println("Recomendação de visitação em todas as cidades e todas as estradas:");
-                    for (int i = 0; i < rotaRecomendada.size(); i++) {
-                        System.out.print(rotaRecomendada.get(i).getNome());
-                        if (i < rotaRecomendada.size() - 1) {
-                            System.out.print(" -> ");
-                        }
+                case "c":
+                    Map<Vertice, Vertice> recomendacoes = grafo.recomendarVisita();
+                    System.out.println("Recomendações de visitação:");
+                    for (Map.Entry<Vertice, Vertice> entrada : recomendacoes.entrySet()) {
+                        System.out.println(entrada.getKey().getNome() + " -> " + entrada.getValue().getNome());
                     }
                     System.out.println();
                     break;
-                
 
                 case "d":
                     List<Vertice> rota = grafo.menorDistanciaPCV();
-                    if(rota.isEmpty()){
+                    if (rota.isEmpty()) {
                         System.out.println("Não foi possível calcular a rota ");
                     }
                     System.out.println("Melhor rota:");
